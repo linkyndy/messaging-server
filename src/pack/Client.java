@@ -28,8 +28,8 @@ public class Client implements Runnable {
         PrintWriter out;
 
         try {
-            in = new BufferedReader(new InputStreamReader(this.c.getInputStream()));
-            out = new PrintWriter(new OutputStreamWriter(this.c.getOutputStream()));
+            in = new BufferedReader(new InputStreamReader(this.s.getInputStream()));
+            out = new PrintWriter(new OutputStreamWriter(this.s.getOutputStream()));
 
             /*
             Handle messages from client: make a distinction between a Post

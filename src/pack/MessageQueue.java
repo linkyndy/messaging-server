@@ -8,7 +8,6 @@ import pack.Message;
 public class MessageQueue {
     private List<Message> messages;
     private int limit;
-    private int length = 0;
 
     MessageQueue(int limit) {
         this.messages = new List<Message>();
