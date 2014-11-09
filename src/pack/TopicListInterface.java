@@ -1,4 +1,6 @@
-import TopicList;
+package pack;
+
+import pack.TopicList;
 
 class TopicListInterface {
     // Single instance holding posted topics

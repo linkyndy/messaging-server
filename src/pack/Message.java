@@ -1,3 +1,5 @@
+package pack;
+
 public class Message {
     private String text;
 

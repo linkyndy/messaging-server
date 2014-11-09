@@ -1,5 +1,7 @@
-import Topic;
-import Post;
+package pack;
+
+import pack.Post;
+import pack.Topic;
 
 public class TopicList {
     private List<Topic> topics;

@@ -1,9 +1,11 @@
+package pack;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.IOException;
 
-import TopicListInterface;
-import MessageQueueInterface;
+import pack.MessageQueueInterface;
+import pack.TopicListInterface;
 
 
 public class Server {

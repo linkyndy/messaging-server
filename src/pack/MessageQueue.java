@@ -1,4 +1,6 @@
-import Message;
+package pack;
+
+import pack.Message;
 
 public class MessageQueue {
     private List<Message> messages;

@@ -1,4 +1,6 @@
-import MessageQueue;
+package pack;
+
+import pack.MessageQueue;
 
 class MessageQueueInterface {
     // Single instance holding posted messages

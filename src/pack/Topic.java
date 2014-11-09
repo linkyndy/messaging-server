@@ -1,4 +1,6 @@
-import Post;
+package pack;
+
+import pack.Post;
 
 public class Topic {
     private String title;
