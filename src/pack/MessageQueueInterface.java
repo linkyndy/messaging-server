@@ -11,14 +11,10 @@ class MessageQueueInterface {
     }
 
     public synchronized boolean push(String title, String receiver) {
-        /*
-        Calls push on MessageQueue
-        */
+        return this.mq.push(title, receiver);
     }
 
-    public synchronized boolean pop(String receiver) {
-        /*
-        Calls pop on MessageQueue
-        */
+    public synchronized Message pop(String receiver) {
+        return this.mq.pop(receiver);
     }
 }

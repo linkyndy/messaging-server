@@ -2,6 +2,7 @@ package pack;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.io.IOException;
 
 import pack.MessageQueueInterface;

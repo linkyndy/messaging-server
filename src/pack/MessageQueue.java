@@ -1,5 +1,8 @@
 package pack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pack.Message;
 
 public class MessageQueue {
@@ -12,19 +15,23 @@ public class MessageQueue {
         this.limit = limit;
     }
 
-    public void push(String text, String receiver) {
-        /*
-        Add message logic (append to this.messages a new Message object -- check
-        if limit has not been exceeded)
-        */
+    public boolean push(String text, String receiver) {
+        if (this.messages.size() < this.limit) {
+            Message message = new Message(text, receiver);
+            this.messages.add(message);
+            return true;
+        }
+        return false;
     }
 
-    public void pop(String receiver) {
-        /*
-        Check if first message (this.messages[0]) has the receiver equal to
-        given receiver; if yes, return the Message object and remove it from
-        this.messages; if no, do nothing (wait for someone else to pick the
-        first message)
-        */
+    public Message pop(String receiver) {
+        if (this.messages.size() > 0) {
+            Message firstMessage = this.messages.get(0);
+            if (firstMessage.getReceiver().equals(receiver)) {
+                this.messages.remove(0);
+                return firstMessage;
+            }
+        }
+        return null;
     }
 }

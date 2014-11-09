@@ -1,41 +1,66 @@
 package pack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import pack.Post;
 import pack.Topic;
 
 public class TopicList {
     private List<Topic> topics;
-    private int length = 0;
 
     TopicList() {
-        this.topics = new List<Topic>();
+        this.topics = new ArrayList<Topic>();
     }
 
-    public String getTopics() {
-        /*
-        Get topics logic (iterate over this.topics and return a String of all
-        topic titles and their ids)
-        */
+    public HashMap<Integer, String> getTopics() {
+        HashMap<Integer, String> allTopics = new HashMap<Integer, String>();
+
+        int i;
+        for (i = 0; i < this.topics.size(); i++) {
+            int currentID = this.topics.get(i).getTopicID();
+            String currentTitle = this.topics.get(i).getTitle();
+            allTopics.put(currentID, currentTitle);
+        }
+
+        return allTopics;
     }
 
-    public void addTopic(String title) {
-        /*
-        Add topic logic (append to this.topics a new Topic object)
-        */
+    public boolean addTopic(String title, int id) {
+        Topic topic = new Topic(title, id);
+
+        if (!this.topics.contains(topic)) {
+            this.topics.add(topic);
+            return true;
+        }
+
+        System.out.println("This topic has already been introduced.");
+        return false;
     }
 
-    public void getPosts(int topic_id) {
-        /*
-        Get posts logic (search for topic with topic_id in this.topics, then
-        iterate on found topic posts and return a String of all post texts)
-        */
+    public List<Post> getPosts(int topic_id) {
+        int i;
+        for (i = 0; i < this.topics.size(); i++) {
+            if (this.topics.get(i).getTopicID() == topic_id) {
+                return this.topics.get(i).getPosts();
+            }
+        }
+
+        System.out.println("This topic does not exist in the list.");
+        return null;
     }
 
-    public void addPost(String text, int topic_id, int expires) {
-        /*
-        Add post to topic logic (search for topic with topic_id in this.topics
-        and append to found topic a new Post object)
-        */
+    public boolean addPost(int topic_id, String text, int expires) {
+        int i;
+        for (i = 0; i < this.topics.size(); i++) {
+            if (this.topics.get(i).getTopicID() == topic_id) {
+                this.topics.get(i).addPost(text, expires);
+                return true;
+            }
+
+        System.out.println("This topic does not exist in the list.");
+        return false;
     }
 
     public boolean clearExpired() {
