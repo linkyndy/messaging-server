@@ -8,23 +8,14 @@ import pack.Post;
 import pack.Topic;
 
 public class TopicList {
-    private List<Topic> topics;
+    private ArrayList<Topic> topics;
 
     TopicList() {
         this.topics = new ArrayList<Topic>();
     }
 
-    public HashMap<Integer, String> getTopics() {
-        HashMap<Integer, String> allTopics = new HashMap<Integer, String>();
-
-        int i;
-        for (i = 0; i < this.topics.size(); i++) {
-            int currentID = this.topics.get(i).getTopicID();
-            String currentTitle = this.topics.get(i).getTitle();
-            allTopics.put(currentID, currentTitle);
-        }
-
-        return allTopics;
+    public ArrayList<Topic> getTopics() {
+        return this.topics;
     }
 
     public boolean addTopic(String title, int id) {
@@ -58,24 +49,10 @@ public class TopicList {
                 this.topics.get(i).addPost(text, expires);
                 return true;
             }
+        }
 
         System.out.println("This topic does not exist in the list.");
         return false;
     }
 
-    public void clearExpired( int currentLimit ) {
-    	int i;
-        for (i = 0; i < this.topics.size(); i++) {
-        	Topic currentTopic = this.topics.get(i);
-        	currentTopic.clearExpired(currentLimit);
-        }
-    }
-
-    public void clearAll() {
-    	int i;
-        for (i = 0; i < this.topics.size(); i++) {
-        	Topic currentTopic = this.topics.get(i);
-        	currentTopic.clearAll();
-        }
-    }
 }

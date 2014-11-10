@@ -28,7 +28,7 @@ public class Topic {
         return this.posts;
     }
 
-    public void addPost( String text, int expires) {
+    public void addPost(String text, int expires) {
         Post post = new Post(text, expires);
         if (!this.posts.contains(post)) {
             this.posts.add(post);
@@ -37,19 +37,25 @@ public class Topic {
             System.out.print("This post has already been introduced.");
         }
     }
-
-    public void clearExpired(int currentLimit) {
+   
+    
+    /* remove all expired posts*/
+    public void clearExpired(int currentLimit)
+    {
     	int i;
-    	for (i=0; i < this.posts.size(); i++) {
+    	for(i=0; i<this.posts.size(); i++)
+    	{
     		Post currentPost = this.posts.get(i);
-    		if(currentPost.getExpires() == currentLimit) {
+    		if(currentPost.getExpires() == currentLimit)
+    		{
     			this.posts.remove(i);
     			i--;
     		}
     	}
     }
-
-    public void clearAll() {
+    
+    public void clearAll()
+    {
     	this.posts.clear();
     }
 }

@@ -17,21 +17,25 @@ public class Client implements Runnable {
     private Socket s;
     private final TopicListInterface tli;
     private final MessageQueueInterface mqi;
+ 
 
-    public Client(Socket s, final TopicListInterface tli, final MessageQueueInterface mqi) {
+    public Client(Socket s, final TopicListInterface tli, final MessageQueueInterface mqi ) {
         this.s = s;
         this.tli = tli;
         this.mqi = mqi;
     }
+    
 
     public void run() {
         BufferedReader in = null;
         PrintWriter out = null;
-
+        
         try {
+	
             in = new BufferedReader(new InputStreamReader(this.s.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(this.s.getOutputStream()));
 
+            
             /*
             Handle messages from client: make a distinction between a Post
             (which belongs to a Topic) and a Message (which has a receiver
@@ -43,13 +47,20 @@ public class Client implements Runnable {
             build a switch statement and map these actions to TopicListInterface
             and MessageQueueInterface methods
             */
-
+            
+            
         } catch (Exception e) {
             System.err.println(e.getMessage());
         } finally {
-            in.close();
-            out.close();
-            this.s.close();
+            try {
+				in.close();
+				out.close();
+	            this.s.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
         }
     }
 }

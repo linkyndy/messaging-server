@@ -1,20 +1,20 @@
 package pack;
 
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import pack.TopicList;
+
 
 class TopicListInterface {
     // Single instance holding posted topics
-    private static final TopicList tl;
+    private static  TopicList tl;
 
     TopicListInterface() {
         this.tl = new TopicList();
     }
 
-    public synchronized HashMap<Integer, String> getTopics() {
+    public synchronized ArrayList<Topic>getTopics() {
         return this.tl.getTopics();
     }
 
@@ -30,11 +30,4 @@ class TopicListInterface {
         return this.tl.addPost(topic_id, text, expires);
     }
 
-    public synchronized void clearExpired(int currentLimit) {
-        this.tl.clearExpired(currentLimit);
-    }
-
-    public synchronized void clearAll() {
-        this.tl.clearAll();
-    }
 }
