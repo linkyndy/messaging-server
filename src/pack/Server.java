@@ -6,8 +6,9 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.io.IOException;
 
-//import pack.MessageQueueInterface;
-//import pack.TopicListInterface;
+import pack.ClientHandler;
+import pack.MessageQueueInterface;
+import pack.TopicListInterface;
 
 
 public class Server {
@@ -19,7 +20,7 @@ public class Server {
     private static ServerSocket ss;
     private static final int PORT = 1234;
 
-    
+
     private synchronized static void clearExpired( int currentLimit ) {
     	ArrayList<Topic> allTopics = new ArrayList<Topic>();
     	allTopics = tli.getTopics();
@@ -29,7 +30,7 @@ public class Server {
         	currentTopic.clearExpired(currentLimit);
         }
     }
-    
+
     private synchronized static void clearAll(){
     	ArrayList<Topic> allTopics = new ArrayList<Topic>();
     	allTopics = tli.getTopics();
@@ -39,38 +40,36 @@ public class Server {
         	currentTopic.clearAll();
         }
     }
-    
-    
+
+
     public static void main(String[] args) {
         Socket s;
         Thread t;
         Thread timerThread;
         Timer timer = new Timer(30);
-        
+
         try {
         	// start a new timer thread
         	timerThread = new Thread( timer );
             timerThread.start();
-            
+
             ss = new ServerSocket(PORT);
 
             while(true) {
                 s = ss.accept();
 
-                // Send both the TopicInterface and MessageQueueInterface to the client;
+                // Send both the TopicInterface and MessageQueueInterface to ClientHandler;
                 // he will decide if he is going to send a Post or a Message
-              
-                Client c1 = new Client(s, tli, mqi);
-                t = new Thread(c1);
+                t = new Thread(new ClientHandler(s, tli, mqi));
                 t.start();
-                
+
                 // delete all expired posts from all topics
                 clearExpired(timer.getCurrentLimit());
-                
+
                 // if time ran out, delete all posts
                 if(!timerThread.isAlive())
                 	clearAll();
-                
+
             }
         } catch (SocketException e) {
             System.exit(1);
