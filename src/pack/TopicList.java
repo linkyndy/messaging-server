@@ -18,16 +18,16 @@ public class TopicList {
         return this.topics;
     }
 
-    public boolean addTopic(String title, int id) {
+    public String addTopic(String title, int id) {
         Topic topic = new Topic(title, id);
 
         if (!this.topics.contains(topic)) {
             this.topics.add(topic);
-            return true;
+            return "Topic added successfully";
         }
 
-        System.out.println("This topic has already been introduced.");
-        return false;
+        return "This topic has already been introduced.";
+        
     }
 
     public List<Post> getPosts(int topic_id) {
@@ -42,17 +42,16 @@ public class TopicList {
         return null;
     }
 
-    public boolean addPost(int topic_id, String text, int expires) {
+    public String addPost(int topic_id, String text, int expires) {
         int i;
         for (i = 0; i < this.topics.size(); i++) {
             if (this.topics.get(i).getTopicID() == topic_id) {
                 this.topics.get(i).addPost(text, expires);
-                return true;
+                return "Post added successfully";
             }
         }
 
-        System.out.println("This topic does not exist in the list.");
-        return false;
+        return  "This topic does not exist in the list.";
     }
 
 }

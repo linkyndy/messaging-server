@@ -18,7 +18,7 @@ class TopicListInterface {
         return this.tl.getTopics();
     }
 
-    public synchronized boolean addTopic(String title, int id) {
+    public synchronized String addTopic(String title, int id) {
         return this.tl.addTopic(title, id);
     }
 
@@ -26,7 +26,7 @@ class TopicListInterface {
         return this.tl.getPosts(topic_id);
     }
 
-    public synchronized boolean addPost(int topic_id, String text, int expires) {
+    public synchronized String addPost(int topic_id, String text, int expires) {
         return this.tl.addPost(topic_id, text, expires);
     }
 

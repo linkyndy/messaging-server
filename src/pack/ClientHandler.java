@@ -41,37 +41,38 @@ public class ClientHandler implements Runnable {
             String action;
             action = in.readLine();
 
-            String response;
+            String response = "";
+            int topic_id;
 
             /*
             All responses below must be converted to String
             */
             switch (action) {
                 case "GET_TOPICS":
-                    response = this.tli.getTopics();
+                    response = this.tli.getTopics().toString();
                     break;
                 case "ADD_TOPIC":
                     String title = in.readLine();
                     response = this.tli.addTopic(title, id++);
                     break;
                 case "GET_POSTS":
-                    int topic_id = Integer.parseInt(in.readLine());
-                    response = this.tli.getPosts(topic_id);
+                    topic_id = Integer.parseInt(in.readLine());
+                    response = this.tli.getPosts(topic_id).toString();
                     break;
                 case "ADD_POST":
-                    int topic_id = Integer.parseInt(in.readLine());
+                    topic_id = Integer.parseInt(in.readLine());
                     String text = in.readLine();
                     int expires = Integer.parseInt(in.readLine());
                     response = this.tli.addPost(topic_id, text, expires);
                     break;
                 case "PUSH":
-                    String title = in.readLine();
+                    String _title = in.readLine();
                     String receiver = in.readLine();
-                    response = this.mqi.push(title, receiver);
+                    response = this.mqi.push(_title, receiver);
                     break;
                 case "POP":
-                    String receiver = in.readLine();
-                    response = this.mqi.pop(receiver);
+                    String _receiver = in.readLine();
+                    response = this.mqi.pop(_receiver);
                     break;
             }
 

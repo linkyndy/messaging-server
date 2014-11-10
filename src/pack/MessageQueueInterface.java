@@ -10,11 +10,11 @@ class MessageQueueInterface {
         this.mq = new MessageQueue(limit);
     }
 
-    public synchronized boolean push(String title, String receiver) {
+    public synchronized String push(String title, String receiver) {
         return this.mq.push(title, receiver);
     }
 
-    public synchronized Message pop(String receiver) {
+    public synchronized String pop(String receiver) {
         return this.mq.pop(receiver);
     }
 }

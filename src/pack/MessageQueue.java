@@ -14,21 +14,21 @@ public class MessageQueue {
         this.limit = limit;
     }
 
-    public boolean push(String text, String receiver) {
+    public String push(String text, String receiver) {
         if (this.messages.size() < this.limit) {
             Message message = new Message(text, receiver);
             this.messages.add(message);
-            return true;
+            return "Message <" + message + "> added successfully";
         }
-        return false;
+        return "Message <" + text  + ";" + receiver + "> could not be added";
     }
 
-    public Message pop(String receiver) {
+    public String pop(String receiver) {
         if (this.messages.size() > 0) {
             Message firstMessage = this.messages.get(0);
             if (firstMessage.getReceiver().equals(receiver)) {
                 this.messages.remove(0);
-                return firstMessage;
+                return firstMessage.toString();
             }
         }
         return null;
