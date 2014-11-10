@@ -4,7 +4,7 @@ import pack.MessageQueue;
 
 class MessageQueueInterface {
     // Single instance holding posted messages
-    private static final MessageQueue mq;
+    private static MessageQueue mq;
 
     MessageQueueInterface(int limit) {
         this.mq = new MessageQueue(limit);

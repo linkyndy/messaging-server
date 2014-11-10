@@ -10,7 +10,7 @@ public class MessageQueue {
     private int limit;
 
     MessageQueue(int limit) {
-        this.messages = new List<Message>();
+        this.messages = new ArrayList<Message>();
         this.limit = limit;
     }
 
