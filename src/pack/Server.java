@@ -21,9 +21,15 @@ public class Server {
     public static void main(String[] args) {
         Socket s;
         Thread t;
+        Thread timerThread;
+        Timer timer = new Timer(30);
 
         try {
-            ss = new ServerSocket(PORT);
+        	// start a new timer thread
+        	timerThread = new Thread(timer);
+            timerThread.start();
+
+            ss = new ServerSocket(this.PORT);
 
             while(true) {
                 s = ss.accept();
@@ -31,7 +37,15 @@ public class Server {
                 // Send both the TopicInterface and MessageQueueInterface to the client;
                 // he will decide if he is going to send a Post or a Message
                 t = new Thread(new Client(s, tli, mqi));
-                t.start()
+                t.start();
+
+                // delete all expired posts from all topics
+                tli.clearExpired(timer.getCurrentLimit());
+
+                // if time ran out, delete all posts
+                if(!timerThread.isAlive()) {
+                	tli.clearAll();
+                }
             }
         } catch (SocketException e) {
             System.exit(1);

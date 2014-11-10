@@ -26,9 +26,11 @@ class TopicListInterface {
         return this.tl.addPost(topic_id, text, expires);
     }
 
-    public synchronized boolean clearExpired() {
-        /*
-        Calls clearExpired on TopicList
-        */
+    public synchronized void clearExpired(int currentLimit) {
+        this.tl.clearExpired(currentLimit);
+    }
+
+    public synchronized void clearAll() {
+        this.tl.clearAll();
     }
 }

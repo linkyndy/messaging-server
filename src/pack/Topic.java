@@ -37,4 +37,19 @@ public class Topic {
             System.out.print("This post has already been introduced.");
         }
     }
+
+    public void clearExpired(int currentLimit) {
+    	int i;
+    	for (i=0; i < this.posts.size(); i++) {
+    		Post currentPost = this.posts.get(i);
+    		if(currentPost.getExpires() == currentLimit) {
+    			this.posts.remove(i);
+    			i--;
+    		}
+    	}
+    }
+
+    public void clearAll() {
+    	this.posts.clear();
+    }
 }

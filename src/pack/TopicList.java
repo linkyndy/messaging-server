@@ -63,10 +63,19 @@ public class TopicList {
         return false;
     }
 
-    public boolean clearExpired() {
-        /*
-        Clear expired posts logic (iterate over this.topics and each of their
-        posts and remove expired posts)
-        */
+    public void clearExpired( int currentLimit ) {
+    	int i;
+        for (i = 0; i < this.topics.size(); i++) {
+        	Topic currentTopic = this.topics.get(i);
+        	currentTopic.clearExpired(currentLimit);
+        }
+    }
+
+    public void clearAll() {
+    	int i;
+        for (i = 0; i < this.topics.size(); i++) {
+        	Topic currentTopic = this.topics.get(i);
+        	currentTopic.clearAll();
+        }
     }
 }

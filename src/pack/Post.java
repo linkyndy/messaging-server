@@ -8,4 +8,8 @@ public class Post {
         this.text = text;
         this.expires = expires;
     }
+
+    public int getExpires() {
+    	return this.expires;
+    }
 }
