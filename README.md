@@ -6,11 +6,12 @@ Simple Java-based messaging server with support for message queues and topics
 How it works
 ------------
 
-Once the server is started, it listens for incoming clients. It creates a `Client`
+Once the server is started, it listens for incoming clients. It creates a `ClientHandler`
 `Runnable` for each incoming client and passes to it the unique references to
-`TopicListInterface` and `MessageQueueInterface`. Then clients can communicate
-via these interfaces in a thread-safe manner. Since communication is done via
-sockets, only text can be sent by the client; the `Client` `Runnable` parses
+`TopicListInterface` and `MessageQueueInterface`. Clients can connect to
+the server and send requests which will be handled in a thread-safe manner.
+Since communication is done via
+sockets, only text can be sent by the client; the `ClientHandler` `Runnable` parses
 this text and maps it to the appropiate interface method.
 
 The messaging server can handle two types of objects:
@@ -27,15 +28,18 @@ methods defined as `synchronized`.
 
 `Post`s are stored in their associated `Topic`. They are deleted after they expire.
 
-In order to add a new topic/post, a `Client` needs to call the appropiate method (`addTopic`/`addPost`)
-on `TopicListInterface` (automatically assigned when `Client` is created).
+In order to add a new topic/post, a `Client` needs to provide the appropiate
+headers for the request (`ADD_TOPIC`/`ADD_POST`) together with request
+arguments, one per line. `ClientHandler` handles the request by calling the
+appropiate method (`addTopic`/`addPost`) on `TopicListInterface`
+(automatically assigned when `ClientClientHandler` is created).
 
 ```
 [add Topic]
-Client -> TopicListInterface -> TopicList -> Topic
+Client ... ClientHandler -> TopicListInterface -> TopicList -> Topic
 
 [add Post]
-Client -> TopicListInterface -> TopicList -> Topic -> Post
+Client ... ClientHandler -> TopicListInterface -> TopicList -> Topic -> Post
 ```
 
 Messages
@@ -45,8 +49,11 @@ Messages
 `MessageQueue` is wrapped in a `MessageQueueInterface` (unique across the
 application), having all methods defined as `synchronized`.
 
-In order to add a new message, a `Client` needs to call the appropiate method (push)
-on `MessageQueueInterface` (automatically assigned when `Client` is created).
+In order to add/receive a message, a `Client` needs to provide the appropiate
+header for the request (`PUSH`/`POP`) together with request
+arguments, one per line. `ClientHandler` handles the request by calling the
+appropiate method (`push`/`pop`) on `MessageQueueInterface`
+(automatically assigned when `ClientHandler` is created).
 
 `MessageQueue` has a limit of `Message`s that it can store.
 
@@ -56,5 +63,5 @@ first `Message`'s receiver.
 
 ```
 [add Message]
-Client -> MessageQueueInterface -> MessageQueue -> Message
+Client ... ClientHandler -> MessageQueueInterface -> MessageQueue -> Message
 ```

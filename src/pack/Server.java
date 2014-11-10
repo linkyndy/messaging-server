@@ -58,8 +58,7 @@ public class Server {
             while(true) {
                 s = ss.accept();
 
-                // Send both the TopicInterface and MessageQueueInterface to ClientHandler;
-                // he will decide if he is going to send a Post or a Message
+                // Send both the TopicInterface and MessageQueueInterface to ClientHandler
                 t = new Thread(new ClientHandler(s, tli, mqi));
                 t.start();
 

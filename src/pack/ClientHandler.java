@@ -30,24 +30,53 @@ public class ClientHandler implements Runnable {
         BufferedReader in = null;
         PrintWriter out = null;
 
-        try {
+        // Holds topic ID to be sent when creating a new topic
+        int id = 0;
 
+        try {
             in = new BufferedReader(new InputStreamReader(this.s.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(this.s.getOutputStream()));
 
+            // Retrieve action sent by client
+            String action;
+            action = in.readLine();
+
+            String response;
 
             /*
-            Handle messages from client: make a distinction between a Post
-            (which belongs to a Topic) and a Message (which has a receiver
-            attached)
-
-            Maybe listen to client socket and parse String input; this input
-            may begin with custom headers, such as what operation the client
-            wants to execute (1 for add topic; 2 for add post to topic; etc);
-            build a switch statement and map these actions to TopicListInterface
-            and MessageQueueInterface methods
+            All responses below must be converted to String
             */
+            switch (action) {
+                case "GET_TOPICS":
+                    response = this.tli.getTopics();
+                    break;
+                case "ADD_TOPIC":
+                    String title = in.readLine();
+                    response = this.tli.addTopic(title, id++);
+                    break;
+                case "GET_POSTS":
+                    int topic_id = Integer.parseInt(in.readLine());
+                    response = this.tli.getPosts(topic_id);
+                    break;
+                case "ADD_POST":
+                    int topic_id = Integer.parseInt(in.readLine());
+                    String text = in.readLine();
+                    int expires = Integer.parseInt(in.readLine());
+                    response = this.tli.addPost(topic_id, text, expires);
+                    break;
+                case "PUSH":
+                    String title = in.readLine();
+                    String receiver = in.readLine();
+                    response = this.mqi.push(title, receiver);
+                    break;
+                case "POP":
+                    String receiver = in.readLine();
+                    response = this.mqi.pop(receiver);
+                    break;
+            }
 
+            out.write(response + "\n");
+            out.flush();
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
